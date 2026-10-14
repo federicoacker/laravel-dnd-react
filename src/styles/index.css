@@ -1,0 +1,12 @@
+/*
+  Stile generale del progetto
+  ===========================
+
+  Questo file contiene gli stili globali dell'applicazione, cioè le regole
+  CSS che si applicano a tutta l'app (reset, tipografia di base, variabili,
+  utility personalizzate, ecc.).
+
+  Viene importato una sola volta in `src/main.jsx` e ha effetto su tutti i
+  componenti. Per stili specifici di un singolo componente è preferibile
+  usare un CSS Module (es. `NomeComponente.module.css`).
+*/
