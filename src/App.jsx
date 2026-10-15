@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/auth/Login"
 import { UserProvider } from "./contexts/UserContext";
 import Register from "./pages/auth/Register";
+import Characters from "./pages/Characters";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
           <Route element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element ={<Register />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/characters" element={<Characters />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

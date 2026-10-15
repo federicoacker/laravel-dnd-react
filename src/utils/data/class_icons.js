@@ -1,0 +1,53 @@
+
+const class_icons = [
+    {
+        id:1,
+        image:"./class_icons/Barbarian.jpg"
+    },
+    {
+        id:2,
+        image:"./class_icons/Bard.jpg"
+    },
+    {
+        id:3,
+        image:"./class_icons/Cleric.jpg"
+    },
+    {
+        id:4,
+        image:"./class_icons/Druid.jpg"
+    },
+    {
+        id:5,
+        image:"./class_icons/Fighter.jpg"
+    },
+    {
+        id:6,
+        image:"./class_icons/Monk.jpg"
+    },
+    {
+        id:7,
+        image:"./class_icons/Paladin.jpg"
+    },
+    {
+        id:8,
+        image:"./class_icons/Ranger.jpg"
+    },
+    {
+        id:9,
+        image:"./class_icons/Rogue.jpg"
+    },
+    {
+        id:10,
+        image:"./class_icons/Sorcerer.jpg"
+    },
+    {
+        id:11,
+        image:"./class_icons/Warlock.jpg"
+    },
+    {
+        id:12,
+        image:"./class_icons/Wizard.jpg"
+    }
+];
+
+export default class_icons;

@@ -1,3 +1,10 @@
-.main{
+
+.main.index{
     background:url('./denim075.png');
+}
+.main.characters{
+    background:url('./characters_background.jpg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-attachment:fixed;
 }

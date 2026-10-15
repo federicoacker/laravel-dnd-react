@@ -49,7 +49,7 @@ function Register() {
                 {registrationErrors.email &&
                     <div className={styles.error}>{registrationErrors.password_confirmation}</div>
                 }
-                <button type="submit" className={`btn ${styles.submit}`}>Login</button>
+                <button type="submit" className={`btn ${styles.submit}`}>Register</button>
             </form>
         </div>
     )
