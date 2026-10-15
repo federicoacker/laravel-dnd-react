@@ -1,0 +1,16 @@
+.submit{
+    display:block;
+    margin: 0.5rem auto;
+    background: #FF611E;
+    border:1px solid #000000;
+    transition:all 0.3s ease;
+}
+.submit:hover{
+    background: #ff8956;
+    border:1px solid #000000;
+}
+
+.error{
+    color:red;
+    text-align:center;
+}

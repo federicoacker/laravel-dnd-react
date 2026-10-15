@@ -1,9 +1,9 @@
-import { Link, NavLink, useParams } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import styles from './Header.module.css';
+import useUser from '../hooks/useUser';
 
 function Header() {
-    let params = useParams();
-    console.log(params);
+    const {user, logout} = useUser();
 
     return (
         <header className={`${styles.header}`}>
@@ -59,10 +59,17 @@ function Header() {
                                 } aria-current="page" to="/spells">Spells</NavLink>
                             </li>
                         </ul>
+                        {user?.token ? 
+                        <div className="d-flex flex-column flex-lg-row gap-2">
+                            <Link className={`btn ${styles.actionBtn}`} to="/profile">{user.name}</Link>
+                            <button className={`btn ${styles.actionBtn}`} onClick={logout}>Logout</button>
+                        </div>
+                        :
                         <div className="d-flex flex-column flex-lg-row gap-2">
                             <Link className={`btn ${styles.actionBtn}`} to="/login">Login</Link>
                             <Link className={`btn ${styles.actionBtn}`} to="/register">Register</Link>
                         </div>
+                        }
                     </div>
                 </div>
             </nav>
