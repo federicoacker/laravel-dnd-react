@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import useUser from "./useUser";
 
-function useCharacters() {
+function useCharacters(query) {
     const { user } = useUser();
     const baseApiUrl = import.meta.env.VITE_API_URL;
     const [characters, setCharacters] = useState([]);
@@ -18,7 +18,7 @@ function useCharacters() {
             }
         };
 
-        fetch(`${baseApiUrl}/characters`, options)
+        fetch(`${baseApiUrl}/characters${query.toString()}`, options)
             .then(response => {
                 setError("");
                 if (!response.ok) {
@@ -39,7 +39,7 @@ function useCharacters() {
                 }
                 setPending(false);
             })
-    }, [user, baseApiUrl]);
+    }, [user, baseApiUrl, query]);
 
     return {error, characters, pending};
 }

@@ -1,6 +1,6 @@
 .header{
     min-height:15vh;
-    background: url('./banner-header.webp');
+    background: url('/banner-header.webp');
     background-repeat:no-repeat;
     background-size:cover;
     background-attachment:fixed;

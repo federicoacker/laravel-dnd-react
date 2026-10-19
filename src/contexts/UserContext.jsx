@@ -55,6 +55,7 @@ function UserProvider({ children }) {
             })
             .then(json => {
                 setUser({
+                    id: json.data.user.id,
                     name: json.data.user.name,
                     role: json.data.user.role,
                     email: json.data.user.email,

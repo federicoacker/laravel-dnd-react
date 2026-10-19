@@ -1,6 +1,6 @@
 .footer{
     min-height: 12vh;
-    background: url('./banner-footer.webp');
+    background: url('/banner-footer.webp');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

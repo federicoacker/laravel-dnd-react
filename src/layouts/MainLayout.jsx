@@ -8,18 +8,20 @@ function MainLayout() {
     const currentPath = location.pathname;
     let pageModifier = "index";
 
-    switch(currentPath){
-        case "/":
+    switch(true){
+        case currentPath === "/":
             pageModifier = "index";
             break;
-        case "/characters":
+        case currentPath === "/characters":
             pageModifier = "characters";
+            break;
+        case /^\/characters\/\d+$/.test(currentPath):
+            pageModifier = "characterShow";
             break;
         default:
             pageModifier = "index";
             break;
     }
-    
     return (
         <>
             <div className="d-flex flex-column vh-100">

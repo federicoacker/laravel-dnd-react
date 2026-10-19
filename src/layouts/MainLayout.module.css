@@ -1,10 +1,16 @@
 
 .main.index{
-    background:url('./denim075.png');
+    background:url('/denim075.png');
 }
 .main.characters{
-    background:url('./characters_background.jpg');
+    background:url('/characters_background.jpg');
     background-repeat: no-repeat;
     background-size:cover;
     background-attachment:fixed;
+}
+.main.characterShow{
+    background:url('/character_show_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }

@@ -1,14 +1,18 @@
 .card {
   color: white;
 
-  background: #8b111380;
+  background: #ff621e80;
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5.8px);
   -webkit-backdrop-filter: blur(5.8px);
   border: 1px solid black;
+  transition:all 0.5s ease;
 }
-
+.card:hover{
+  scale:1.05;
+  box-shadow: 0 4px 30px #ff621e80;
+}
 .cardImgWrapper {
   img {
     border-top: 1px solid black;

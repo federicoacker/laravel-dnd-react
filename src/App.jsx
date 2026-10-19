@@ -6,20 +6,25 @@ import Login from "./pages/auth/Login"
 import { UserProvider } from "./contexts/UserContext";
 import Register from "./pages/auth/Register";
 import Characters from "./pages/Characters";
+import { FilterProvider } from "./contexts/FilterContext";
+import Character from "./pages/Character";
 
 function App() {
   return (
     <BrowserRouter>
       <UserProvider>
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/characters" element={<Characters />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+        <FilterProvider>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/characters" element={<Characters />} />
+              <Route path="/characters/:id" element={<Character />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </FilterProvider>
       </UserProvider>
     </BrowserRouter>
   );

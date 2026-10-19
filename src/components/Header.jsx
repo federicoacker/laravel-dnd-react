@@ -9,7 +9,7 @@ function Header() {
         <header className={`${styles.header}`}>
             <nav className={`navbar navbar-expand-lg ${styles.navbar}`} data-bs-theme="dark">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="./"><img src="./character-forge.png" alt="Icona Character Forge" className={styles.logo} /></Link>
+                    <Link className="navbar-brand" to="/"><img src="/character-forge.png" alt="Icona Character Forge" className={styles.logo} /></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
