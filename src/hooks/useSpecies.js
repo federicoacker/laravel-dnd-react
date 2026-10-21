@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { useState } from "react"
 import useUser from "./useUser";
 
-function useSpecies() {
+function useSpecies(paginate = false) {
     const { user } = useUser();
     const baseApiUrl = import.meta.env.VITE_API_URL;
     const [species, setSpecies] = useState([]);
     const [speciesError, setSpeciesError] = useState("");
     const [speciesPending, setSpeciesPending] = useState(true);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [lastPage, setLastPage] = useState(0);
 
     useEffect(() => {
         const options = {
@@ -18,7 +20,7 @@ function useSpecies() {
                 Authorization: `Bearer ${user.token}`
             }
         };
-        fetch(`${baseApiUrl}/species`, options)
+        fetch(`${baseApiUrl}/species?paginate=${paginate}`, options)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.status);
@@ -27,7 +29,13 @@ function useSpecies() {
             }
             )
             .then(json => {
-                setSpecies(json.data);
+                setSpecies(json.data.data);
+                if(json.data.current_page){
+                    setCurrentPage(json.data.currentPage);
+                }
+                if(json.data.last_page){
+                    setLastPage(json.data.lastPage);
+                }
                 setSpeciesPending(false);
             })
             .catch(error => {
@@ -39,9 +47,9 @@ function useSpecies() {
                 }
                 setSpeciesPending(false);
             });
-    }, [user, baseApiUrl]);
+    }, [user, baseApiUrl, paginate]);
 
-    return {species, speciesError, speciesPending};
+    return {species, speciesError, speciesPending, currentPage, lastPage};
 }
 
 export default useSpecies

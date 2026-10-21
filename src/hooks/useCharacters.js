@@ -1,14 +1,17 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useUser from "./useUser";
 
-function useCharacters(query) {
+function useCharacters(query, scope = "public", page = 1) {
     const { user } = useUser();
     const baseApiUrl = import.meta.env.VITE_API_URL;
     const [characters, setCharacters] = useState([]);
     const [error, setError] = useState("");
     const [pending, setPending] = useState(true);
+    const [lastPage, setLastPage] = useState(1);
+
     useEffect(() => {
+        let cancelled = false;
+
         const options = {
             method: "GET",
             headers: {
@@ -18,30 +21,36 @@ function useCharacters(query) {
             }
         };
 
-        fetch(`${baseApiUrl}/characters${query.toString()}`, options)
+        fetch(`${baseApiUrl}/characters?${query.toString()}&scope=${scope}&page=${page}`, options)
             .then(response => {
-                setError("");
                 if (!response.ok) {
                     throw new Error(response.status);
                 }
                 return response.json();
             })
             .then(json => {
-                setCharacters(json.data);
-                setPending(false);
+                if (!cancelled) {
+                    setCharacters(json.data.data);
+                    setLastPage(json.data.last_page);
+                    setError("");
+                    setPending(false);
+                }
             })
             .catch(error => {
-                if (error.message === "404") {
-                    setError("No characters found");
+                if (!cancelled) {
+                    setCharacters([]);
+                    setLastPage(1);
+                    setError(error.message === "404" ? "No characters found" : "Error while fetching characters");
+                    setPending(false);
                 }
-                else {
-                    setError("Error while fetching characters");
-                }
-                setPending(false);
-            })
-    }, [user, baseApiUrl, query]);
+            });
 
-    return {error, characters, pending};
+        return () => {
+            cancelled = true;
+        };
+    }, [user, baseApiUrl, query, scope, page]);
+
+    return { error, characters, pending, lastPage };
 }
 
 export default useCharacters

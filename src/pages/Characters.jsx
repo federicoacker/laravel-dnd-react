@@ -10,9 +10,22 @@ import { Link } from 'react-router';
 
 function Characters() {
     const { user } = useUser();
-    const { debouncedQuery, setSelectedClassesArray, selectedClassesArray, searchTerms, setSearchTerms, selectedBackgroundsArray, setSelectedBackgroundsArray, selectedSpeciesArray, setSelectedSpeciesArray } = useUrlQuery();
+    const {
+        query,
+        setSelectedClassesArray,
+        selectedClassesArray,
+        searchTerms,
+        setSearchTerms,
+        selectedBackgroundsArray,
+        setSelectedBackgroundsArray,
+        selectedSpeciesArray,
+        setSelectedSpeciesArray,
+        privatePage,
+        setPrivatePage,
+        publicPage,
+        setPublicPage
+    } = useUrlQuery();
     const { classError, classes, classPending, backgroundError, backgrounds, backgroundPending, species, speciesError, speciesPending } = useFilter()
-    const { error, characters, pending } = useCharacters(`?search=${debouncedQuery}&classes=${selectedClassesArray.join(",")}&backgrounds=${selectedBackgroundsArray.join(",")}&species=${selectedSpeciesArray.join(",")}`);
 
     const handleSearchChange = (event) => {
         setSearchTerms(event.target.value);
@@ -60,10 +73,18 @@ function Characters() {
             return [...selectedSpecies, speciesValue];
         })
     }
-    const userCharacters = characters.filter(character => character.user_id === user.id);
-    console.log(userCharacters);
-    const priCharacters = characters.filter(character => !character.is_public);
-    const pubCharacters = characters.filter(character => (character.is_public ));
+    const {
+        characters: privateCharacters,
+        pending: privateCharactersPending,
+        error: privateCharactersError,
+        lastPage: privateLastPage
+    } = useCharacters(`?${query}`, user.role === "admin" ? "private" : "mine", privatePage);
+    const {
+        characters: publicCharacters,
+        pending: publicCharactersPending,
+        error: publicCharactersError,
+        lastPage: publicLastPage
+    } = useCharacters(`?${query}`, "public", publicPage);
 
     return (
         <div>
@@ -73,14 +94,17 @@ function Characters() {
                 <label className="form-label">Filter by class:</label>
                 {
                     classError ? <div>{classError}</div> : !classPending ?
+                        <div className="d-flex flex-column align-items-center gap-2">
+                            <button type="button" className="btn btn-outline-primary" onClick={() => setSelectedClassesArray(['any'])}>Reset Class Filter</button>
+                            <div className="d-flex gap-4 justify-content-center flex-wrap">
+                                {
+                                    classes.map(fetchedClass => <button type="button" onClick={changeClassArray} data-value={fetchedClass.name} key={fetchedClass.id} className={`btn ${selectedClassesArray.includes(fetchedClass.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
+                                        <img className={styles.imageIcon} src={class_icons.find(icon => icon.id === fetchedClass.id).image} />
+                                        <p>{fetchedClass.name}</p>
+                                    </button>)
+                                }
 
-                        <div className="d-flex gap-4 justify-content-center flex-wrap">
-                            {
-                                classes.map(fetchedClass => <button type="button" onClick={changeClassArray} data-value={fetchedClass.name} key={fetchedClass.id} className={`btn ${selectedClassesArray.includes(fetchedClass.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
-                                    <img className={styles.imageIcon} src={class_icons.find(icon => icon.id === fetchedClass.id).image} />
-                                    <p>{fetchedClass.name}</p>
-                                </button>)
-                            }
+                            </div>
                         </div>
                         :
                         <div>
@@ -90,13 +114,16 @@ function Characters() {
                 <label className="form-label">Filter by background:</label>
                 {
                     backgroundError ? <div>{backgroundError}</div> : !backgroundPending ?
+                        <div className="d-flex flex-column align-items-center gap-2">
+                            <button type="button" className="btn btn-outline-primary" onClick={() => setSelectedBackgroundsArray(['any'])}>Reset Background Filter</button>
+                            <div className="d-flex gap-4 justify-content-center flex-wrap">
+                                {
+                                    backgrounds.map(fetchedBackground => <button type="button" onClick={changeBackgroundArray} data-value={fetchedBackground.name} key={fetchedBackground.id} className={`btn ${selectedBackgroundsArray.includes(fetchedBackground.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
+                                        <p>{fetchedBackground.name}</p>
+                                    </button>)
+                                }
 
-                        <div className="d-flex gap-4 justify-content-center flex-wrap">
-                            {
-                                backgrounds.map(fetchedBackground => <button type="button" onClick={changeBackgroundArray} data-value={fetchedBackground.name} key={fetchedBackground.id} className={`btn ${selectedBackgroundsArray.includes(fetchedBackground.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
-                                    <p>{fetchedBackground.name}</p>
-                                </button>)
-                            }
+                            </div>
                         </div>
                         :
                         <div>
@@ -106,13 +133,15 @@ function Characters() {
                 <label className="form-label">Filter by race:</label>
                 {
                     speciesError ? <div>{speciesError}</div> : !speciesPending ?
-
-                        <div className="d-flex gap-4 justify-content-center flex-wrap">
-                            {
-                                species.map(fetchedSpecies => <button type="button" onClick={changeSpeciesArray} data-value={fetchedSpecies.name} key={fetchedSpecies.id} className={`btn ${selectedSpeciesArray.includes(fetchedSpecies.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
-                                    <p>{fetchedSpecies.name}</p>
-                                </button>)
-                            }
+                        <div className="d-flex flex-column align-items-center gap-2">
+                            <button type="button" className="btn btn-outline-primary" onClick={() => setSelectedSpeciesArray(['any'])}>Reset Race Filter</button>
+                            <div className="d-flex gap-4 justify-content-center flex-wrap">
+                                {
+                                    species.map(fetchedSpecies => <button type="button" onClick={changeSpeciesArray} data-value={fetchedSpecies.name} key={fetchedSpecies.id} className={`btn ${selectedSpeciesArray.includes(fetchedSpecies.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
+                                        <p>{fetchedSpecies.name}</p>
+                                    </button>)
+                                }
+                            </div>
                         </div>
                         :
                         <div>
@@ -129,29 +158,33 @@ function Characters() {
                         </div>
                         <h2 className="text-white text-center">{user.role === "admin" ? "Private Characters" : "Your Characters"} </h2>
                         {
-                            error ? <div className={styles.card}>{error}</div> : !pending && priCharacters.length > 0 ?
+                            privateCharactersError ? <div className={styles.card}>{privateCharactersError}</div> : !privateCharactersPending && privateCharacters.length > 0 ?
                                 <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                                    {priCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
+                                    {privateCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
                                 </div>
-                                : !pending && priCharacters.length === 0 ? 
-                                userCharacters.length > 0 && user.role !== "admin" ?  
-                                <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                                    {userCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
-                                </div>
-                                : <div className={styles.card}>No characters found</div>
-                                : <div className={styles.card}>Loading characters</div>
+                                : !privateCharactersPending ? <div className={styles.card}>No characters found</div> : <div className={styles.card}>Loading characters</div>
                         }
+                        <div className="d-flex justify-content-center align-items-center gap-2">
+                            <button type="button" disabled={privatePage <= 1 || privateCharactersPending} onClick={() => setPrivatePage(current => Math.max(1, current - 1))}>Prev</button>
+                            <span>{privatePage} / {privateLastPage}</span>
+                            <button type="button" disabled={privatePage >= privateLastPage || privateCharactersPending} onClick={() => setPrivatePage(current => Math.min(privateLastPage, current + 1))}>Next</button>
+                        </div>
                         <hr className={styles.separator} />
                     </div>
                 }
                 <h2 className="text-white text-center">Public Characters</h2>
                 {
-                    error ? <div className={styles.card}>{error}</div> : !pending && pubCharacters.length > 0 ?
+                    publicCharactersError ? <div className={styles.card}>{publicCharactersError}</div> : !publicCharactersPending && publicCharacters.length > 0 ?
                         <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            {pubCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
+                            {publicCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
                         </div>
-                        : !pending && pubCharacters.length === 0 ? <div className={styles.card}>No characters found</div> : <div className={styles.card}>Loading characters</div>
+                        : !publicCharactersPending && publicCharacters.length === 0 ? <div className={styles.card}>No characters found</div> : <div className={styles.card}>Loading characters</div>
                 }
+                <div className="d-flex justify-content-center align-items-center">
+                    <button type="button" disabled={publicPage <= 1 || publicCharactersPending} onClick={() => setPublicPage(current => Math.max(1, current - 1))}>Prev</button>
+                    <span>{publicPage} / {publicLastPage}</span>
+                    <button type="button" disabled={publicPage >= publicLastPage || publicCharactersPending} onClick={() => setPublicPage(current => Math.min(publicLastPage, current + 1))}>Next</button>
+                </div>
             </div>
         </div>
     )
