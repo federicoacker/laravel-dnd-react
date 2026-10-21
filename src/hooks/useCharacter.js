@@ -31,10 +31,13 @@ function useCharacter(id) {
             })
             .catch(error => {
                 if (error.message === "404") {
-                    setError("Non sono stati trovati personaggi");
+                    setError("No character found");
+                }
+                else if(error.message === "403"){
+                    setError("You don't have access to this character.");
                 }
                 else {
-                    setError("C'è stato un errore nel fetch dei personaggi");
+                    setError("Error while fetching character.")
                 }
                 setPending(false);
             })

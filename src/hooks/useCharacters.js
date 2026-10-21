@@ -32,10 +32,10 @@ function useCharacters(query) {
             })
             .catch(error => {
                 if (error.message === "404") {
-                    setError("Non sono stati trovati personaggi");
+                    setError("No characters found");
                 }
                 else {
-                    setError("C'è stato un errore nel fetch dei personaggi");
+                    setError("Error while fetching characters");
                 }
                 setPending(false);
             })

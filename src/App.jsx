@@ -8,6 +8,7 @@ import Register from "./pages/auth/Register";
 import Characters from "./pages/Characters";
 import { FilterProvider } from "./contexts/FilterContext";
 import Character from "./pages/Character";
+import CharacterCreate from "./pages/CharacterCreate";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/characters" element={<Characters />} />
               <Route path="/characters/:id" element={<Character />} />
+              <Route path="/newCharacter" element={<CharacterCreate/>}/>
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

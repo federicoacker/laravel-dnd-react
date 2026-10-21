@@ -6,12 +6,13 @@ import CharacterShow from "../components/CharacterShow";
 function Character() {
     let {id} = useParams();
     const {character, error, pending} = useCharacter(id);
+    console.log(error);
   return (
     <div className={styles.card}>
         {!error ? 
-        pending ? "Sto Caricando il Personaggio" : 
+        pending ? "Loading Character" : 
         <CharacterShow {...character}/>
-        : {error}}
+        : error.toString()}
     </div>
   )
 }

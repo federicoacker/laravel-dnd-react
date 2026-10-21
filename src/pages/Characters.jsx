@@ -6,6 +6,7 @@ import useUrlQuery from '../hooks/useUrlQuery';
 import styles from './Characters.module.css';
 import class_icons from '../utils/data/class_icons';
 import useFilter from '../hooks/useFilter';
+import { Link } from 'react-router';
 
 function Characters() {
     const { user } = useUser();
@@ -51,7 +52,7 @@ function Characters() {
 
         setSelectedSpeciesArray(currentSpecies => {
             const selectedSpecies = currentSpecies.filter(value => value !== "any");
-            if(selectedSpecies.includes(speciesValue)){
+            if (selectedSpecies.includes(speciesValue)) {
                 const updatedSpecies = selectedSpecies.filter(value => value !== speciesValue);
                 return updatedSpecies.length > 0 ? updatedSpecies : ["any"];
             }
@@ -59,9 +60,10 @@ function Characters() {
             return [...selectedSpecies, speciesValue];
         })
     }
-
+    const userCharacters = characters.filter(character => character.user_id === user.id);
+    console.log(userCharacters);
     const priCharacters = characters.filter(character => !character.is_public);
-    const pubCharacters = characters.filter(character => character.is_public);
+    const pubCharacters = characters.filter(character => (character.is_public ));
 
     return (
         <div>
@@ -74,7 +76,7 @@ function Characters() {
 
                         <div className="d-flex gap-4 justify-content-center flex-wrap">
                             {
-                                classes.map(fetchedClass => <button type="button" onClick={changeClassArray} data-value={fetchedClass.name} key={fetchedClass.id} className={`btn ${selectedClassesArray.includes(fetchedClass.name) ? 'btn-primary' : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
+                                classes.map(fetchedClass => <button type="button" onClick={changeClassArray} data-value={fetchedClass.name} key={fetchedClass.id} className={`btn ${selectedClassesArray.includes(fetchedClass.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
                                     <img className={styles.imageIcon} src={class_icons.find(icon => icon.id === fetchedClass.id).image} />
                                     <p>{fetchedClass.name}</p>
                                 </button>)
@@ -82,7 +84,7 @@ function Characters() {
                         </div>
                         :
                         <div>
-                            "Stiamo caricando le classi"
+                            "Loading Classes"
                         </div>
                 }
                 <label className="form-label">Filter by background:</label>
@@ -91,14 +93,14 @@ function Characters() {
 
                         <div className="d-flex gap-4 justify-content-center flex-wrap">
                             {
-                                backgrounds.map(fetchedBackground => <button type="button" onClick={changeBackgroundArray} data-value={fetchedBackground.name} key={fetchedBackground.id} className={`btn ${selectedBackgroundsArray.includes(fetchedBackground.name) ? 'btn-primary' : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
+                                backgrounds.map(fetchedBackground => <button type="button" onClick={changeBackgroundArray} data-value={fetchedBackground.name} key={fetchedBackground.id} className={`btn ${selectedBackgroundsArray.includes(fetchedBackground.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
                                     <p>{fetchedBackground.name}</p>
                                 </button>)
                             }
                         </div>
                         :
                         <div>
-                            "Stiamo caricando i backgrounds"
+                            "Loading Backgrounds"
                         </div>
                 }
                 <label className="form-label">Filter by race:</label>
@@ -107,14 +109,14 @@ function Characters() {
 
                         <div className="d-flex gap-4 justify-content-center flex-wrap">
                             {
-                                species.map(fetchedSpecies => <button type="button" onClick={changeSpeciesArray} data-value={fetchedSpecies.name} key={fetchedSpecies.id} className={`btn ${selectedSpeciesArray.includes(fetchedSpecies.name) ? 'btn-primary' : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
+                                species.map(fetchedSpecies => <button type="button" onClick={changeSpeciesArray} data-value={fetchedSpecies.name} key={fetchedSpecies.id} className={`btn ${selectedSpeciesArray.includes(fetchedSpecies.name) ? styles.btnSelected : 'btn-outline-primary'} d-flex flex-column align-items-center justify-content-center`}>
                                     <p>{fetchedSpecies.name}</p>
                                 </button>)
                             }
                         </div>
                         :
                         <div>
-                            "Stiamo caricando le races"
+                            "Loading Races"
                         </div>
                 }
             </form>
@@ -122,24 +124,33 @@ function Characters() {
             <div className="my-4">
                 {user.role !== "guest" &&
                     <div>
-                        <h2 className="text-white text-center">{user.role === "admin" ? "Personaggi Privati" : "I tuoi Personaggi"} </h2>
+                        <div className="d-flex justify-content-center my-2">
+                            <Link className={`btn ${styles.actionButton} `} to="/newCharacter">Create Character</Link>
+                        </div>
+                        <h2 className="text-white text-center">{user.role === "admin" ? "Private Characters" : "Your Characters"} </h2>
                         {
-                            error ? <div>{error}</div> : !pending && priCharacters.length > 0 ?
+                            error ? <div className={styles.card}>{error}</div> : !pending && priCharacters.length > 0 ?
                                 <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                                     {priCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
                                 </div>
-                                : !pending && priCharacters.length === 0 ? "Non sono stati trovati personaggi" : "Stiamo caricando i personaggi"
+                                : !pending && priCharacters.length === 0 ? 
+                                userCharacters.length > 0 && user.role !== "admin" ?  
+                                <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                                    {userCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
+                                </div>
+                                : <div className={styles.card}>No characters found</div>
+                                : <div className={styles.card}>Loading characters</div>
                         }
                         <hr className={styles.separator} />
                     </div>
                 }
-                <h2 className="text-white text-center">Personaggi Pubblici</h2>
+                <h2 className="text-white text-center">Public Characters</h2>
                 {
-                    error ? <div>{error}</div> : !pending && pubCharacters.length > 0 ?
+                    error ? <div className={styles.card}>{error}</div> : !pending && pubCharacters.length > 0 ?
                         <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                             {pubCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
                         </div>
-                        : !pending && pubCharacters.length === 0 ? "Non sono stati trovati personaggi" : "Stiamo caricando i personaggi"
+                        : !pending && pubCharacters.length === 0 ? <div className={styles.card}>No characters found</div> : <div className={styles.card}>Loading characters</div>
                 }
             </div>
         </div>

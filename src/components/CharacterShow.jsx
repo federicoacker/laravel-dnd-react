@@ -8,7 +8,7 @@ import useUser from "../hooks/useUser";
 import useFeats from "../hooks/useFeats";
 import validateCharacterEdit from "../utils/functions/validateCharacterEdit";
 
-function CharacterShow({ id, owner_id, name, level, background, backstory, strength, dexterity, constitution, intellect, wisdom, charisma, image, inventory, profession, species, proficiencies, feats }) {
+function CharacterShow({ is_public, id, owner_id, name, level, background, backstory, strength, dexterity, constitution, intellect, wisdom, charisma, image, inventory, profession, species, proficiencies, feats }) {
     const { proficiencyError, proficiencyPending, proficiencies: fetchedProficiencies } = useProficiencies();
     const [backstoryOpened, setBackstoryOpened] = useState(false);
     const [classFeaturesOpened, setClassFeaturesOpened] = useState(false);
@@ -18,6 +18,7 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
     const [inventoryOpened, setInventoryOpened] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [previewUrl, setPreviewUrl] = useState("");
+    const [updateError, setUpdateError] = useState("");
 
     const { user: currentUser } = useUser();
     const templateErrors = {
@@ -67,7 +68,8 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
         species,
         proficiencies,
         feats,
-        owner_id
+        owner_id,
+        is_public
     });
     const [updatedAbilityScores, setUpdatedAbilityScores] = useState({
         strength,
@@ -99,7 +101,15 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
         const value = event.target.value;
         const type = event.target.type;
 
-        if (type === "checkbox" && field !== "feats") {
+        if (type === "checkbox" && field === "is_public") {
+            const newValue = updatedCharacter.is_public === 1 ? 0 : 1;
+            setUpdatedCharacter({
+                ...updatedCharacter,
+                is_public: newValue
+            });
+            return;
+        }
+        else if (type === "checkbox" && field !== "feats") {
             let newProficiencies = updatedCharacter.proficiencies.map(proficiency => { return { name: proficiency.name, id: proficiency.id } });
             if (newProficiencies.map(proficiency => proficiency.id).includes(Number(value))) {
                 newProficiencies = newProficiencies.filter(proficiency => proficiency.id !== Number(value));
@@ -107,8 +117,6 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
             else {
                 newProficiencies.push({ name: field, id: Number(value) });
             }
-            console.log(newProficiencies);
-
             setUpdatedCharacter(
                 {
                     ...updatedCharacter,
@@ -183,6 +191,7 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
             })
             return;
         }
+
         setUpdatedCharacter(
             {
                 ...updatedCharacter,
@@ -190,7 +199,6 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
             }
         )
     }
-
     const skillProficiencies = fetchedProficiencies.filter(proficiency => proficiency.type === "Skill");
     const toolProficiencies = proficiencies.filter(proficiency => proficiency.type === "Tool" || proficiency.type === "Musical Instrument");
     const weaponProficiencies = profession.proficiencies.filter(proficiency => proficiency.type === "Weapon");
@@ -199,11 +207,11 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
 
     if (updatedCharacter.level <= 4) {
         proficiencyBonus = 2;
-    } else if (updatedCharacter.level > 4 && level <= 8) {
+    } else if (updatedCharacter.level > 4 && updatedCharacter.level <= 8) {
         proficiencyBonus = 3;
-    } else if (updatedCharacter.level > 8 && level <= 12) {
+    } else if (updatedCharacter.level > 8 && updatedCharacter.level <= 12) {
         proficiencyBonus = 4;
-    } else if (updatedCharacter.level > 12 && level <= 16) {
+    } else if (updatedCharacter.level > 12 && updatedCharacter.level <= 16) {
         proficiencyBonus = 5;
     } else {
         proficiencyBonus = 6;
@@ -246,32 +254,158 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
         };
     })
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const submittableCharacter = { ...updatedCharacter };
-        submittableCharacter.level = Number(updatedCharacter.level);
-        const { validatedCharacter, validationErrors: errors } = validateCharacterEdit({ ...submittableCharacter });
+
+        const submittableCharacter = {
+            ...updatedCharacter,
+            level: Number(updatedCharacter.level),
+        };
+
+        const {
+            validatedCharacter,
+            validationErrors: errors,
+        } = validateCharacterEdit(submittableCharacter);
+
         if (!validatedCharacter) {
             setValidationErrors(errors);
+            return;
         }
-        else {
-            setValidationErrors(templateErrors);
+
+        setValidationErrors(templateErrors);
+        setUpdateError("");
+
+        const formData = new FormData();
+
+        const appendFormData = (value, key) => {
+            if (value === undefined) {
+                return;
+            }
+
+            if (value === null) {
+                formData.append(key, "");
+                return;
+            }
+
+            if (value instanceof File) {
+                formData.append(key, value);
+                return;
+            }
+
+            if (typeof value === "boolean") {
+                formData.append(key, value ? "1" : "0");
+                return;
+            }
+
+            if (Array.isArray(value)) {
+                value.forEach((item, index) => {
+                    appendFormData(item, `${key}[${index}]`);
+                });
+                return;
+            }
+
+            if (typeof value === "object") {
+                Object.entries(value).forEach(([childKey, childValue]) => {
+                    appendFormData(childValue, key ? `${key}[${childKey}]` : childKey);
+                });
+                return;
+            }
+
+            formData.append(key, String(value));
+        };
+
+        const payload = {
+            name: validatedCharacter.name,
+            level: validatedCharacter.level,
+            background_id: validatedCharacter.background?.id ?? "",
+            species_id: validatedCharacter.species?.id ?? "",
+            profession_id: validatedCharacter.profession?.id ?? "",
+            backstory: validatedCharacter.backstory,
+            strength: validatedCharacter.strength,
+            dexterity: validatedCharacter.dexterity,
+            constitution: validatedCharacter.constitution,
+            intellect: validatedCharacter.intellect,
+            wisdom: validatedCharacter.wisdom,
+            charisma: validatedCharacter.charisma,
+            inventory: validatedCharacter.inventory,
+            proficiencies: validatedCharacter.proficiencies?.map(({ id }) => id) ?? [],
+            feats: validatedCharacter.feats?.map(({ id }) => id) ?? [],
+        };
+
+        if (validatedCharacter.is_public !== undefined) {
+            payload.is_public = validatedCharacter.is_public;
         }
-    }
+
+        Object.entries(payload).forEach(([key, value]) => {
+            appendFormData(value, key);
+        });
+
+        //Marker per far sapere a laravel che gli array vuoti che sta ricevendo in backend sono vuoti volutamente
+        //E che deve quindi fare il sync e droppare le relations
+        formData.append("proficiencies_present", "1");
+        formData.append("feats_present", "1");
+
+        if (validatedCharacter.image instanceof File) {
+            formData.append("image", validatedCharacter.image);
+        }
+
+        // Spoofing del metodo da POST a PUT
+        formData.append("_method", "PUT");
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/characters/${id}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/vnd.api+json",
+                    Authorization: `Bearer ${currentUser.token}`,
+                },
+                body: formData,
+            });
+
+            const responseBody = await response.json().catch(() => null);
+
+            if (response.status === 422) {
+                setValidationErrors(responseBody?.errors ?? templateErrors);
+                setUpdateError("Please correct the validation errors and try again.");
+                return;
+            }
+
+            if (response.status === 403) {
+                setUpdateError("You aren't authorized to edit this character");
+                return;
+            }
+
+            if (!response.ok) {
+                setUpdateError(
+                    responseBody?.message ?? "There was an error while updating this character"
+                );
+                return;
+            }
+            window.location.reload();
+        } catch {
+            setUpdateError("There was an error while updating this character");
+        }
+    };
 
     return (
         <form data-bs-theme="dark" onSubmit={handleSubmit}>
             <div>
+                {updateError !== "" && <div className={`${styles.validationError} text-center fs-4`}>{updateError}</div>}
                 {Object.values(validationErrors).some(error => error !== "") && <div className={`${styles.validationError} text-center fs-4`}>There are errors in the edit, check the page to see what mistake you made</div>}
 
                 {validationErrors.id && <div className={styles.validationError}>{validationErrors.id}</div>}
-                <div className="row row-cols-3 align-items-center mb-2">
-                    <div className="col form-check form-switch d-flex justify-content-center gap-5 align-items-center" data-bs-them="dark">
-                        <label className={!readyToEdit ? "d-none" : "form-check-label"} htmlFor="edit" >Edit</label>
-                        <input disabled={!readyToEdit} className={!readyToEdit ? "d-none" : "form-check-input"} role="switch" type="checkbox" id="edit" name="edit" checked={editMode} onChange={() => setEditMode(current => !current)}></input>
-                        {editMode && <div>
+                <div className="row row-cols-1 row-cols-lg-3 g-2 align-items-center mb-2">
+                    <div className="col form-check form-switch d-flex flex-wrap justify-content-center gap-3 align-items-center" data-bs-them="dark">
+                        <div>
+                            <label className={!readyToEdit ? "d-none" : "form-check-label"} htmlFor="edit" >Edit</label>
+                            <input disabled={!readyToEdit} className={!readyToEdit ? "d-none" : "form-check-input"} role="switch" type="checkbox" id="edit" name="edit" checked={editMode} onChange={() => setEditMode(current => !current)}></input>
+                        </div>
+                        {editMode && <div className="d-flex gap-2 flex-wrap justify-content-center">
                             <button className={`btn ${styles.featureButton}`} type="submit">Salva le modifiche</button>
-
+                            <div className="d-flex align-items-center gap-2">
+                                <label className="form-label mb-0" htmlFor="is_public">Public</label>
+                                <input className="form-check" type="checkbox" id="is_public" name="is_public" checked={updatedCharacter.is_public === 1} onChange={handleEdit} />
+                            </div>
                         </div>
                         }
                     </div>
@@ -438,12 +572,16 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
                             }
                         </div>
                     </div>
+                    <div className="d-flex flex-column justify-content-center align-items-center my-2">
+                        <h5>Proficiency Bonus:</h5>
+                        {proficiencyBonus}
+                    </div>
                 </section>
                 <section className="container">
                     <div className="row row-cols-1 row-cols-lg-3">
                         <div className="col text-center">
                             <h5>Skill Proficiencies:</h5>
-                            {proficiencyError ? "Errore nel caricamento delle proficiencies" : proficiencyPending ? "Stiamo caricando le proficiencies" :
+                            {proficiencyError ? "Failed while loading proficiencies" : proficiencyPending ? "Loading proficiencies" :
                                 !editMode ?
                                     skillProficiencies.map(proficiency =>
                                         <div key={proficiency.id}>
@@ -494,6 +632,9 @@ function CharacterShow({ id, owner_id, name, level, background, backstory, stren
                                         </p>
                                     </div>
                                 )
+                            }
+                            <h5>Armor Training</h5>
+                            {updatedCharacter.profession?.armor_training
                             }
                         </div>
                     </div>

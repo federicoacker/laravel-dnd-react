@@ -14,3 +14,21 @@
     background-size: cover;
     background-attachment: fixed;
 }
+.main.characterCreate{
+    background:url('/background_create.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.login{
+    background:url('/login_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.register{
+    background:url('/register_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}

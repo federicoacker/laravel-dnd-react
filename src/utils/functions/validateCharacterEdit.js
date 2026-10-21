@@ -1,5 +1,5 @@
 
-function validateCharacterEdit({ id, name, level, background, backstory, strength, dexterity, constitution, intellect, wisdom, charisma, inventory, profession, species, proficiencies, feats }) {
+function validateCharacterEdit({ image, is_public, id, name, level, background, backstory, strength, dexterity, constitution, intellect, wisdom, charisma, inventory, profession, species, proficiencies, feats }) {
 
     const validationErrors = {
         id: "",
@@ -74,6 +74,7 @@ function validateCharacterEdit({ id, name, level, background, backstory, strengt
     }
     else {
         validatedCharacter = {
+            is_public,
             id,
             name,
             level,
@@ -89,7 +90,8 @@ function validateCharacterEdit({ id, name, level, background, backstory, strengt
             profession,
             species,
             proficiencies,
-            feats
+            feats,
+            image
         }
         return {validatedCharacter, validationErrors};
     }
