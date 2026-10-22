@@ -2,14 +2,19 @@ import { useEffect } from "react";
 import { useState } from "react"
 import useUser from "./useUser";
 
-function useProficiencies() {
+function useProficiencies(query = "") {
     const { user } = useUser();
     const baseApiUrl = import.meta.env.VITE_API_URL;
     const [proficiencies, setProficiencies] = useState([]);
     const [proficiencyError, setProficiencyError] = useState("");
     const [proficiencyPending, setProficiencyPending] = useState(true);
+    const [lastPage, setLastPage] = useState(1);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setProficiencyPending(true);
+        setProficiencyError("");
+
         const options = {
             method: "GET",
             headers: {
@@ -18,7 +23,8 @@ function useProficiencies() {
                 Authorization: `Bearer ${user.token}`
             }
         };
-        fetch(`${baseApiUrl}/proficiencies`, options)
+        const queryString = query ? `?${query}` : "";
+        fetch(`${baseApiUrl}/proficiencies${queryString}`, options)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.status);
@@ -27,7 +33,10 @@ function useProficiencies() {
             }
             )
             .then(json => {
-                setProficiencies(json.data);
+                setProficiencies(json.data.data);
+                if(json.data.last_page){
+                    setLastPage(json.data.last_page);
+                }
                 setProficiencyPending(false);
             })
             .catch(error => {
@@ -39,9 +48,9 @@ function useProficiencies() {
                 }
                 setProficiencyPending(false);
             });
-    }, [user, baseApiUrl]);
+    }, [user, baseApiUrl, query]);
 
-    return { proficiencies, proficiencyError, proficiencyPending};
+    return { proficiencies, proficiencyError, proficiencyPending, lastPage};
 }
 
 export default useProficiencies

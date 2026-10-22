@@ -1,0 +1,45 @@
+.actionButton {
+  background: url("/denim075.png");
+  color: white;
+  border: 1px solid #ff611e;
+}
+.actionButton:hover {
+  background-color: #ff611e;
+  color: white;
+  border: 1px solid #ff611e;
+}
+
+.card {
+  margin: 1rem auto;
+  padding: 1rem 1rem;
+  color: white;
+  background: url("/denim075.png");
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.8px);
+  -webkit-backdrop-filter: blur(5.8px);
+  border: 1px solid #ff611e;
+  transition: all 0.5s ease;
+}
+.filterForm {
+  margin: 1rem 0;
+  background: url("/denim075.png");
+  border: 1px solid #ff611e;
+  input {
+    border: 1px solid #ff611e;
+  }
+  button {
+    border: 1px solid #ff611e;
+    color: #ff611e;
+  }
+  button.btnSelected {
+    background-color: #ff611e;
+    color: white;
+    border: 1px solid #ff611e;
+  }
+  button:hover {
+    background-color: #ff611e;
+    color: white;
+    border: 1px solid #ff611e;
+  }
+}

@@ -1,17 +1,20 @@
-import { useEffect } from "react";
-import { useState } from "react"
+import { useEffect, useState } from "react";
 import useUser from "./useUser";
 
-function useSpecies(paginate = false) {
+function useSpecies(query = "") {
     const { user } = useUser();
     const baseApiUrl = import.meta.env.VITE_API_URL;
     const [species, setSpecies] = useState([]);
     const [speciesError, setSpeciesError] = useState("");
     const [speciesPending, setSpeciesPending] = useState(true);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [lastPage, setLastPage] = useState(0);
+    const [lastPage, setLastPage] = useState(1);
 
     useEffect(() => {
+        // Questa fetch deve settare a true il pending per far tornare la variabile di stato a false dopo il fetch fatto nella filterContext
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setSpeciesPending(true);
+        setSpeciesError("");
+
         const options = {
             method: "GET",
             headers: {
@@ -20,7 +23,8 @@ function useSpecies(paginate = false) {
                 Authorization: `Bearer ${user.token}`
             }
         };
-        fetch(`${baseApiUrl}/species?paginate=${paginate}`, options)
+        const queryString = query ? `?${query}` : "";
+        fetch(`${baseApiUrl}/species${queryString}`, options)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.status);
@@ -30,26 +34,22 @@ function useSpecies(paginate = false) {
             )
             .then(json => {
                 setSpecies(json.data.data);
-                if(json.data.current_page){
-                    setCurrentPage(json.data.currentPage);
-                }
-                if(json.data.last_page){
-                    setLastPage(json.data.lastPage);
+                if (json.data.last_page) {
+                    setLastPage(json.data.last_page);
                 }
                 setSpeciesPending(false);
             })
             .catch(error => {
-                if(error.message === "404"){
+                if (error.message === "404") {
                     setSpeciesError("No species found");
-                }
-                else{
+                } else {
                     setSpeciesError("There was an error while fetching species");
                 }
                 setSpeciesPending(false);
             });
-    }, [user, baseApiUrl, paginate]);
+    }, [user, baseApiUrl, query]);
 
-    return {species, speciesError, speciesPending, currentPage, lastPage};
+    return { species, speciesError, speciesPending, lastPage };
 }
 
 export default useSpecies

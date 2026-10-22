@@ -78,13 +78,13 @@ function Characters() {
         pending: privateCharactersPending,
         error: privateCharactersError,
         lastPage: privateLastPage
-    } = useCharacters(`?${query}`, user.role === "admin" ? "private" : "mine", privatePage);
+    } = useCharacters(`${query}`, user.role === "admin" ? "private" : "mine", privatePage);
     const {
         characters: publicCharacters,
         pending: publicCharactersPending,
         error: publicCharactersError,
         lastPage: publicLastPage
-    } = useCharacters(`?${query}`, "public", publicPage);
+    } = useCharacters(`${query}`, "public", publicPage);
 
     return (
         <div>
@@ -159,15 +159,18 @@ function Characters() {
                         <h2 className="text-white text-center">{user.role === "admin" ? "Private Characters" : "Your Characters"} </h2>
                         {
                             privateCharactersError ? <div className={styles.card}>{privateCharactersError}</div> : !privateCharactersPending && privateCharacters.length > 0 ?
-                                <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                                <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
                                     {privateCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
                                 </div>
                                 : !privateCharactersPending ? <div className={styles.card}>No characters found</div> : <div className={styles.card}>Loading characters</div>
                         }
-                        <div className="d-flex justify-content-center align-items-center gap-2">
-                            <button type="button" disabled={privatePage <= 1 || privateCharactersPending} onClick={() => setPrivatePage(current => Math.max(1, current - 1))}>Prev</button>
+                        <div className="d-flex justify-content-center align-items-center gap-2 my-4">
+                            {
+                            // Qui gli passiamo la callback dicendogli cosa deve fare (idem per la public, ma quella sta sotto)
+                            }
+                            <button className={`btn ${styles.actionButton}`} type="button" disabled={privatePage <= 1 || privateCharactersPending} onClick={() => setPrivatePage(current => Math.max(1, current - 1))}>Prev</button> 
                             <span>{privatePage} / {privateLastPage}</span>
-                            <button type="button" disabled={privatePage >= privateLastPage || privateCharactersPending} onClick={() => setPrivatePage(current => Math.min(privateLastPage, current + 1))}>Next</button>
+                            <button className={`btn ${styles.actionButton}`} type="button" disabled={privatePage >= privateLastPage || privateCharactersPending} onClick={() => setPrivatePage(current => Math.min(privateLastPage, current + 1))}>Next</button>
                         </div>
                         <hr className={styles.separator} />
                     </div>
@@ -175,15 +178,15 @@ function Characters() {
                 <h2 className="text-white text-center">Public Characters</h2>
                 {
                     publicCharactersError ? <div className={styles.card}>{publicCharactersError}</div> : !publicCharactersPending && publicCharacters.length > 0 ?
-                        <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                        <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
                             {publicCharacters.map(character => <div key={character.id} className="col"><CharactersCard {...character} /></div>)}
                         </div>
                         : !publicCharactersPending && publicCharacters.length === 0 ? <div className={styles.card}>No characters found</div> : <div className={styles.card}>Loading characters</div>
                 }
-                <div className="d-flex justify-content-center align-items-center">
-                    <button type="button" disabled={publicPage <= 1 || publicCharactersPending} onClick={() => setPublicPage(current => Math.max(1, current - 1))}>Prev</button>
+                <div className="d-flex justify-content-center align-items-center gap-2 my-4">
+                    <button className={`btn ${styles.actionButton}`} type="button" disabled={publicPage <= 1 || publicCharactersPending} onClick={() => setPublicPage(current => Math.max(1, current - 1))}>Prev</button>
                     <span>{publicPage} / {publicLastPage}</span>
-                    <button type="button" disabled={publicPage >= publicLastPage || publicCharactersPending} onClick={() => setPublicPage(current => Math.min(publicLastPage, current + 1))}>Next</button>
+                    <button className={`btn ${styles.actionButton}`} type="button" disabled={publicPage >= publicLastPage || publicCharactersPending} onClick={() => setPublicPage(current => Math.min(publicLastPage, current + 1))}>Next</button>
                 </div>
             </div>
         </div>

@@ -1,10 +1,8 @@
 .header{
-    min-height:15vh;
     background: url('/banner-header.webp');
     background-repeat:no-repeat;
     background-size:cover;
-    background-attachment:fixed;
-    background-position:left;
+    background-position:center;
 }
 
 .logo{

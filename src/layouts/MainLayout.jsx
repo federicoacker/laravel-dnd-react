@@ -8,7 +8,6 @@ function MainLayout() {
     const location = useLocation();
     const currentPath = location.pathname;
     let pageModifier = validator(currentPath, "index");
-    
     return (
         <>
             <div className="d-flex flex-column vh-100">

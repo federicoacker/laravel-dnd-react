@@ -32,3 +32,45 @@
     background-size: cover;
     background-attachment: fixed;
 }
+.main.races{
+    background:url('/races_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.backgrounds{
+    background:url('/backgrounds_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.classes{
+    background:url('/classes_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.features{
+    background:url('/features_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.feats{
+    background:url('/feats_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.spells{
+    background:url('/spells_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.proficiencies{
+    background:url('/proficiencies_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}

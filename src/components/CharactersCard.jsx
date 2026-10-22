@@ -2,11 +2,10 @@ import class_icons from '../utils/data/class_icons'
 import styles from './CharactersCard.module.css'
 import { Link } from 'react-router'
 
-function CharactersCard({ is_public,id, name, profession, species, background, level, strength, dexterity, constitution, intellect, wisdom, charisma, image }) {
+function CharactersCard({ id, name, profession, species, background, level, strength, dexterity, constitution, intellect, wisdom, charisma, image }) {
     return (
         <Link to={`/characters/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className={styles.card}>
-                <h1>{is_public}</h1>
                 <section className={styles.cardBody}>
                     <div className={styles.cardTitle}>{name}</div>
                     {image ?

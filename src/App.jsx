@@ -9,6 +9,13 @@ import Characters from "./pages/Characters";
 import { FilterProvider } from "./contexts/FilterContext";
 import Character from "./pages/Character";
 import CharacterCreate from "./pages/CharacterCreate";
+import Races from "./pages/Races";
+import Backgrounds from "./pages/Backgrounds";
+import Classes from "./pages/Classes";
+import Features from "./pages/Features";
+import Feats from "./pages/Feats";
+import Proficiencies from "./pages/Proficiencies";
+import Spells from "./pages/Spells";
 
 function App() {
   return (
@@ -23,6 +30,13 @@ function App() {
               <Route path="/characters" element={<Characters />} />
               <Route path="/characters/:id" element={<Character />} />
               <Route path="/newCharacter" element={<CharacterCreate/>}/>
+              <Route path="/races" element={<Races/>}/>
+              <Route path="/backgrounds" element={<Backgrounds/>}/>
+              <Route path="/classes" element={<Classes/>}/>
+              <Route path="/features" element={<Features/>}/>
+              <Route path="/feats" element={<Feats/>}/>
+              <Route path="/proficiencies" element={<Proficiencies/>}/>
+              <Route path="/spells" element={<Spells/>}/>
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

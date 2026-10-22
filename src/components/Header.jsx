@@ -37,7 +37,7 @@ function Header() {
                             </li>
                             <li><NavLink className={({ isActive, isPending }) =>
                                 isPending ? `${styles.navLink} ${styles.pending}` : isActive ? `${styles.navLink} ${styles.active}` : `${styles.navLink}`
-                            } aria-current="page" to="/species">Species</NavLink>
+                            } aria-current="page" to="/races">Races</NavLink>
                             </li>
                             <li><NavLink className={({ isActive, isPending }) =>
                                 isPending ? `${styles.navLink} ${styles.pending}` : isActive ? `${styles.navLink} ${styles.active}` : `${styles.navLink}`
