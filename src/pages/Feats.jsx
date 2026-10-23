@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
 import { useSearchParams } from "react-router";
-import styles from "./Classes.module.css";
+import styles from "./Feats.module.css";
 import useFeats from "../hooks/useFeats";
 import useDebounce from "../hooks/useDebounce";
 import FeatCard from "../components/FeatCard";

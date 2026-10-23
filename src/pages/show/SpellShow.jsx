@@ -6,7 +6,7 @@ function SpellShow() {
     const params = useParams();
     const { spell, spellError, spellPending } = useSpell(params.id);
     const classString = spell?.professions?.map((profession) => {
-        return <Link to={`/classes/${profession.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        return <Link key={`class-${profession.id}`} to={`/classes/${profession.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <div className="d-flex flex-column align-items-center">
             <img className={styles.imageIcon} src={class_icons.find(icon => icon.id === profession.id).image}></img>
             {profession.name}

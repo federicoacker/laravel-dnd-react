@@ -396,7 +396,7 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                     {Object.values(validationErrors).some(error => error !== "") && <div className={`${styles.validationError} text-center fs-4`}>There are errors in the edit, check the page to see what mistake you made</div>}
 
                     {validationErrors.id && <div className={styles.validationError}>{validationErrors.id}</div>}
-                    <button type="button" className="btn btn-outline-danger mx-auto d-block" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Character</button>
+                    {hasPermission && <button type="button" className="btn btn-outline-danger mx-auto d-block" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Character</button>}
                     <div className="row row-cols-1 row-cols-lg-3 g-2 align-items-center mb-2">
                         <div className="col form-check form-switch d-flex flex-wrap justify-content-center gap-3 align-items-center" data-bs-them="dark">
                             <div>
@@ -606,7 +606,7 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                             </div>
                             <div className="col text-center">
                                 <h5>Tool Proficiencies:</h5>
-                                {!editMode ?
+                                {!editMode ? toolProficiencies.length === 0 ? "None" :
                                     toolProficiencies.map(proficiency =>
                                         <div key={proficiency.id}>
                                             <p className={proficiencies.some(proficiencyObject => proficiencyObject.id === proficiency.id) ? `${styles.proficiency} ${styles.activeProficiency}` : styles.proficiency} >
