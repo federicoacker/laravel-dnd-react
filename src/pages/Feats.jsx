@@ -79,7 +79,7 @@ function Feats() {
             <div className="d-flex justify-content-center align-items-center gap-2 my-4">
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featPending} onClick={() => changePage(1)}>First</button>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
-                <span>{currentPage} / {lastPage}</span>
+                <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={featPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
@@ -93,7 +93,7 @@ function Feats() {
             <div className="d-flex justify-content-center align-items-center gap-2 my-4">
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featPending} onClick={() => changePage(1)}>First</button>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
-                <span>{currentPage} / {lastPage}</span>
+                <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={featPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>

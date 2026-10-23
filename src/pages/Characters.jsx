@@ -169,7 +169,7 @@ function Characters() {
                             // Qui gli passiamo la callback dicendogli cosa deve fare (idem per la public, ma quella sta sotto)
                             }
                             <button className={`btn ${styles.actionButton}`} type="button" disabled={privatePage <= 1 || privateCharactersPending} onClick={() => setPrivatePage(current => Math.max(1, current - 1))}>Prev</button> 
-                            <span>{privatePage} / {privateLastPage}</span>
+                            <span className="text-white bg-dark d-block rounded-1 px-2">{privatePage} / {privateLastPage}</span>
                             <button className={`btn ${styles.actionButton}`} type="button" disabled={privatePage >= privateLastPage || privateCharactersPending} onClick={() => setPrivatePage(current => Math.min(privateLastPage, current + 1))}>Next</button>
                         </div>
                         <hr className={styles.separator} />
@@ -185,7 +185,7 @@ function Characters() {
                 }
                 <div className="d-flex justify-content-center align-items-center gap-2 my-4">
                     <button className={`btn ${styles.actionButton}`} type="button" disabled={publicPage <= 1 || publicCharactersPending} onClick={() => setPublicPage(current => Math.max(1, current - 1))}>Prev</button>
-                    <span>{publicPage} / {publicLastPage}</span>
+                    <span className="text-white bg-dark d-block rounded-1 px-2">{publicPage} / {publicLastPage}</span>
                     <button className={`btn ${styles.actionButton}`} type="button" disabled={publicPage >= publicLastPage || publicCharactersPending} onClick={() => setPublicPage(current => Math.min(publicLastPage, current + 1))}>Next</button>
                 </div>
             </div>
