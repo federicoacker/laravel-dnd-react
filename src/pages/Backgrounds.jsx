@@ -82,7 +82,7 @@ function Backgrounds() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || backgroundPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || backgroundPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={backgroundPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || backgroundPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
             {backgroundError ? <div className={styles.card}>{backgroundError}</div> :
                 backgroundPending ? <div className={styles.card}>Loading Backgrounds</div> : backgrounds.length > 0 ?
@@ -96,7 +96,7 @@ function Backgrounds() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || backgroundPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || backgroundPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={backgroundPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || backgroundPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
         </div>
     )

@@ -81,7 +81,7 @@ function Feats() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={featPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
             {featError ? <div className={styles.card}>{featError}</div> :
                 featPending ? <div className={styles.card}>Loading Feats</div> : feats.length > 0 ?
@@ -95,7 +95,7 @@ function Feats() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={featPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
         </div>
     )

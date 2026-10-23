@@ -2,7 +2,7 @@ import { Link } from "react-router"
 import styles from "./FeatCard.module.css"
 function FeatCard({ id, name}) {
     return (
-        <Link to={`/features/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to={`/feats/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className={styles.card}>
                 <section className={styles.cardBody}>
                     <div className={styles.cardTitle}>{name}</div>

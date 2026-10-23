@@ -2,7 +2,7 @@ import { Link } from "react-router"
 import styles from "./ClassCard.module.css"
 function ClassCard({ id, name, primary_ability, image, hit_points_die, hit_points_at_level_1, saving_throws, armor_training }) {
     return (
-        <Link to={`/races/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to={`/classes/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className={styles.card}>
                 <section className={styles.cardBody}>
                     <div className={styles.cardTitle}>{name}</div>

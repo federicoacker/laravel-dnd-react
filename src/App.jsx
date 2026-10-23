@@ -16,6 +16,12 @@ import Features from "./pages/Features";
 import Feats from "./pages/Feats";
 import Proficiencies from "./pages/Proficiencies";
 import Spells from "./pages/Spells";
+import BackgroundShow from "./pages/show/BackgroundShow";
+import ClassShow from "./pages/show/ClassShow";
+import RaceShow from "./pages/show/RaceShow";
+import FeatureShow from "./pages/show/FeatureShow";
+import FeatShow from "./pages/show/FeatShow";
+import SpellShow from "./pages/show/SpellShow";
 
 function App() {
   return (
@@ -31,12 +37,18 @@ function App() {
               <Route path="/characters/:id" element={<Character />} />
               <Route path="/newCharacter" element={<CharacterCreate/>}/>
               <Route path="/races" element={<Races/>}/>
+              <Route path="/races/:id" element={<RaceShow/>}/>
               <Route path="/backgrounds" element={<Backgrounds/>}/>
+              <Route path="/backgrounds/:id" element={<BackgroundShow/>}/>
               <Route path="/classes" element={<Classes/>}/>
+              <Route path="/classes/:id" element={<ClassShow/>}/>
               <Route path="/features" element={<Features/>}/>
+              <Route path="/features/:id" element={<FeatureShow />}/>
               <Route path="/feats" element={<Feats/>}/>
+              <Route path="/feats/:id" element={<FeatShow/>}/>
               <Route path="/proficiencies" element={<Proficiencies/>}/>
               <Route path="/spells" element={<Spells/>}/>
+              <Route path="/spells/:id" element={<SpellShow/>}/>
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

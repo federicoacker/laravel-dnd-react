@@ -1,0 +1,187 @@
+.homePage {
+  width: min(100%, 62rem);
+  margin: 0 auto;
+  padding: 2rem 0;
+  color: white;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem;
+  border: 1px solid #ff611e;
+  border-radius: 16px;
+  background:url("/denim075.png");
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.35);
+}
+.eyebrow {
+  margin-bottom: 1rem;
+  color: #ff8956;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 48rem;
+  margin-bottom: 1.25rem;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.title span {
+  color: #ff611e;
+}
+
+.intro {
+  max-width: 39rem;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.primaryAction {
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #ff611e;
+  background: #ff611e;
+  color: #111;
+}
+
+.primaryAction:hover {
+  border-color: #ff8956;
+  background: #ff8956;
+  color: #111;
+}
+
+.primaryAction span {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.secondaryAction {
+  color: white;
+}
+
+.secondaryAction:hover {
+  color: #ff8956;
+}
+
+.primaryAction:focus-visible,
+.secondaryAction:focus-visible,
+.exploreLink:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.discover {
+  padding: 2.5rem 0 0.5rem;
+}
+
+.discoverTitle {
+  color:white;
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid #ff611e;
+  background:url("/denim075.png");
+  border-radius:10px;
+  padding:0.5rem 0.5rem;
+}
+
+.exploreLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.exploreLink {
+  align-items: start;
+  width:33%;  
+  gap: 0.85rem;
+  min-height: 7rem;
+  padding: 1.15rem;
+  border: 1px solid rgba(255, 97, 30, 0.55);
+  border-radius: 10px;
+  background: url('/denim075.png');
+  color: white;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.exploreLink:hover {
+  border-color: #ff611e;
+  background: rgba(255, 97, 30, 0.76);
+  color: black;
+  .linkNumber,
+  .linkDescription,
+  .linkArrow{
+    color:black;
+  }
+  
+  
+}
+
+.linkNumber {
+  color: #ff8956;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.exploreLink strong,
+.linkDescription {
+  display: block;
+}
+
+.exploreLink strong {
+  margin-bottom: 0.35rem;
+}
+
+.linkDescription {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.linkArrow {
+  color: #ff611e;
+}
+
+@media (max-width: 767px) {
+  .homePage {
+    padding-top: 2rem;
+  }
+
+  .exploreLinks {
+    grid-template-columns: 1fr;
+  }
+
+  .exploreLink {
+    min-height: auto;
+  }
+}

@@ -14,7 +14,6 @@ function UserProvider({ children }) {
     const [error, setError] = useState("");
     const [user, setUser] = useState(() => {
         const savedUser = localStorage.getItem("savedUser");
-
         if (!savedUser) {
             return guestUser;
         }

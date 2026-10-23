@@ -81,7 +81,7 @@ function Features() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featurePending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featurePending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={featurePending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featurePending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
             {featureError ? <div className={styles.card}>{featureError}</div> :
                 featurePending ? <div className={styles.card}>Loading Features</div> : features.length > 0 ? 
@@ -95,7 +95,7 @@ function Features() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || featurePending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featurePending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={featurePending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || featurePending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
         </div>
     )

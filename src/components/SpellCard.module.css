@@ -1,12 +1,11 @@
 .card {
+  padding: 1rem 1rem;
   color: white;
-
-  background: #ff621e80;
+  background: url("/denim075.png");
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5.8px);
-  -webkit-backdrop-filter: blur(5.8px);
-  border: 1px solid black;
+  border: 1px solid #FF611E;
   transition: all 0.5s ease;
 }
 .card:hover{
@@ -20,7 +19,7 @@
   padding: 0 2rem;
 }
 .cardTitle {
-  margin: 2rem auto;
+  margin: 0 auto;
   font-size: large;
   text-align: center;
   padding: 0.5rem 1rem;

@@ -81,7 +81,7 @@ function Races() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || speciesPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || speciesPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={speciesPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || speciesPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
             {speciesError ? <div className={styles.card}>{speciesError}</div> :
                 speciesPending ? <div className={styles.card}>Loading Races</div> : species.length > 0 ?
@@ -95,7 +95,7 @@ function Races() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || speciesPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || speciesPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={speciesPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || speciesPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
         </div>
     )

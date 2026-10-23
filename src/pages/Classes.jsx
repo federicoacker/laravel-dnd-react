@@ -82,7 +82,7 @@ function Classes() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || classPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || classPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={classPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || classPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
             {classError ? <div className={styles.card}>{classError}</div> :
                 classPending ? <div className={styles.card}>Loading Classes</div> : classes.length > 0 ?
@@ -96,7 +96,7 @@ function Classes() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || classPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || classPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={classPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || classPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
         </div>
     )

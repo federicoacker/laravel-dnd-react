@@ -132,3 +132,14 @@
 .validationError{
     color:red;
 }
+
+.actionButton {
+  background: url("/denim075.png");
+  color: white;
+  border: 1px solid #ff611e;
+}
+.actionButton:hover {
+  background-color: #ff611e;
+  color: white;
+  border: 1px solid #ff611e;
+}

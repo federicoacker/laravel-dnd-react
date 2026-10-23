@@ -1,6 +1,9 @@
 
 .main.index{
-    background:url('/denim075.png');
+    background:url('/home_background.jpg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-attachment:fixed;
 }
 .main.characters{
     background:url('/characters_background.jpg');
@@ -38,8 +41,20 @@
     background-size: cover;
     background-attachment: fixed;
 }
+.main.raceShow{
+    background:url('/raceShow_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
 .main.backgrounds{
     background:url('/backgrounds_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.backgroundShow{
+    background:url('/backgroundShow_background.webp');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -50,8 +65,20 @@
     background-size: cover;
     background-attachment: fixed;
 }
+.main.classShow{
+    background:url('/classShow_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
 .main.features{
     background:url('/features_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.featureShow{
+    background:url('/featureShow_background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -62,8 +89,20 @@
     background-size: cover;
     background-attachment: fixed;
 }
+.main.featShow{
+    background:url('/featShow_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
 .main.spells{
     background:url('/spells_background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main.spellShow{
+    background:url('/spellShow_background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;

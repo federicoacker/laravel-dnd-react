@@ -82,7 +82,7 @@ function Proficiencies() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || proficiencyPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || proficiencyPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={proficiencyPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || proficiencyPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
             {proficiencyError ? <div className={styles.card}>{proficiencyError}</div> :
                 proficiencyPending ? <div className={styles.card}>Loading Proficiencies</div> : proficiencies.length > 0 ? 
@@ -97,7 +97,7 @@ function Proficiencies() {
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage <= 1 || proficiencyPending} onClick={() => changePage(Math.max(1, currentPage - 1))}>Prev</button>
                 <span className="text-white bg-dark d-block rounded-1 px-2">{currentPage} / {lastPage}</span>
                 <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || proficiencyPending} onClick={() => changePage(Math.min(lastPage, currentPage + 1))}>Next</button>
-                <button className={`btn ${styles.actionButton}`} type="button" disabled={proficiencyPending} onClick={() => changePage(lastPage)}>Last</button>
+                <button className={`btn ${styles.actionButton}`} type="button" disabled={currentPage >= lastPage || proficiencyPending} onClick={() => changePage(lastPage)}>Last</button>
             </div>
         </div>
     )

@@ -7,6 +7,7 @@ import useSpecies from "../hooks/useSpecies";
 import useUser from "../hooks/useUser";
 import useFeats from "../hooks/useFeats";
 import validateCharacterEdit from "../utils/functions/validateCharacterEdit";
+import { Link } from "react-router";
 
 function CharacterShow({ is_public, id, owner_id, name, level, background, backstory, strength, dexterity, constitution, intellect, wisdom, charisma, image, inventory, profession, species, proficiencies, feats }) {
     const { proficiencyError, proficiencyPending, proficiencies: fetchedProficiencies } = useProficiencies();
@@ -588,7 +589,7 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                                         skillProficiencies.map(proficiency =>
                                             <div key={proficiency.id}>
                                                 <p className={proficiencies.some(proficiencyObject => proficiencyObject.id === proficiency.id) ? `${styles.proficiency} ${styles.activeProficiency}` : styles.proficiency} >
-                                                    {proficiency.name} {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name).value}
+                                                    {proficiency.name} ({proficiency.ability_score}) {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name).value}
                                                 </p>
                                             </div>)
                                         :
@@ -596,7 +597,7 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                                             {skillProficiencies.map(proficiency =>
                                                 <div className="d-flex gap-2" key={proficiency.id}>
                                                     <input name={proficiency.name} id={proficiency.name} onChange={handleEdit} className="form-check" type="checkbox" checked={updatedCharacter.proficiencies.map(proficiency => proficiency.id).includes(proficiency.id)} value={proficiency.id} />
-                                                    <label className="form-check-label" htmlFor={proficiency.name}>{proficiency.name} {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name).value}</label>
+                                                    <label className="form-check-label" htmlFor={proficiency.name}>{proficiency.name} ({proficiency.ability_score}) {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name).value}</label>
                                                 </div>
                                             )}
                                             {validationErrors.proficiencies && <div className={styles.validationError}>{validationErrors.proficiencies}</div>}
@@ -609,7 +610,7 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                                     toolProficiencies.map(proficiency =>
                                         <div key={proficiency.id}>
                                             <p className={proficiencies.some(proficiencyObject => proficiencyObject.id === proficiency.id) ? `${styles.proficiency} ${styles.activeProficiency}` : styles.proficiency} >
-                                                {proficiency.name} {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name)?.value}
+                                                {proficiency.name} ({proficiency.ability_score}) {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name)?.value}
                                             </p>
                                         </div>)
                                     :
@@ -617,7 +618,7 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                                         {allToolProficiencies.map(proficiency =>
                                             <div className="d-flex gap-2" key={proficiency.id}>
                                                 <input name={proficiency.name} id={proficiency.name} onChange={handleEdit} className="form-check" type="checkbox" checked={updatedCharacter.proficiencies.map(proficiency => proficiency.id).includes(proficiency.id)} value={proficiency.id} />
-                                                <label className="form-check-label" htmlFor={proficiency.name}>{proficiency.name} {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name).value}</label>
+                                                <label className="form-check-label" htmlFor={proficiency.name}>{proficiency.name} ({proficiency.ability_score}) {skillProficiencyBonuses.find(skillProficiencyBonus => skillProficiencyBonus.name === proficiency.name).value}</label>
                                             </div>
                                         )}
                                         {validationErrors.proficiencies && <div className={styles.validationError}>{validationErrors.proficiencies}</div>}
@@ -706,6 +707,7 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                                     <table>
                                         <thead>
                                             <tr>
+                                                <th>More Info</th>
                                                 <th>Level</th>
                                                 <th>Name</th>
                                                 <th>Casting Time</th>
@@ -719,6 +721,9 @@ function CharacterShow({ is_public, id, owner_id, name, level, background, backs
                                                 updatedCharacter.profession.spells.sort((a, b) => a.level - b.level).map(spell => {
                                                     return (
                                                         <tr key={`${spell.id}-spell`}>
+                                                            <td>
+                                                                <Link className={`btn ${styles.actionButton}`} to={`/spells/${spell.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>Info</Link>
+                                                            </td>
                                                             <td>{spell.level}</td>
                                                             <td>{spell.name}</td>
                                                             <td>{spell.casting_time}</td>
