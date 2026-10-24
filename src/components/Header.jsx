@@ -61,7 +61,7 @@ function Header() {
                         </ul>
                         {user?.token ? 
                         <div className="d-flex flex-column flex-lg-row gap-2">
-                            <Link className={`btn ${styles.actionBtn}`} to="/profile">{user.name}</Link>
+                            <Link className={`btn ${styles.actionBtn}`} to={`/profiles/${user.id}`}>{user.name}</Link>
                             <button className={`btn ${styles.actionBtn}`} onClick={logout}>Logout</button>
                         </div>
                         :

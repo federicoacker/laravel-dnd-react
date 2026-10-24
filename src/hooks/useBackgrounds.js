@@ -33,7 +33,6 @@ function useBackgrounds(query = "") {
             }
             )
             .then(json => {
-                console.log(json);
                 setBackgrounds(json.data.data);
                 if (json.data.last_page) {
                     setLastPage(json.data.last_page);

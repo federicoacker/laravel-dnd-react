@@ -22,6 +22,7 @@ import RaceShow from "./pages/show/RaceShow";
 import FeatureShow from "./pages/show/FeatureShow";
 import FeatShow from "./pages/show/FeatShow";
 import SpellShow from "./pages/show/SpellShow";
+import Profile from "./pages/auth/Profile";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
               <Route path="/proficiencies" element={<Proficiencies/>}/>
               <Route path="/spells" element={<Spells/>}/>
               <Route path="/spells/:id" element={<SpellShow/>}/>
+              <Route path="/profiles/:id" element={<Profile/>}/>
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
