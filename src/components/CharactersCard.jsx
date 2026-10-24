@@ -2,9 +2,9 @@ import class_icons from '../utils/data/class_icons'
 import styles from './CharactersCard.module.css'
 import { Link } from 'react-router'
 
-function CharactersCard({ name, profession, species, background, level, strength, dexterity, constitution, intellect, wisdom, charisma, image }) {
+function CharactersCard({ id, name, profession, species, background, level, strength, dexterity, constitution, intellect, wisdom, charisma, image }) {
     return (
-        <Link style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to={`/characters/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className={styles.card}>
                 <section className={styles.cardBody}>
                     <div className={styles.cardTitle}>{name}</div>

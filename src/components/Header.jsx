@@ -9,7 +9,7 @@ function Header() {
         <header className={`${styles.header}`}>
             <nav className={`navbar navbar-expand-lg ${styles.navbar}`} data-bs-theme="dark">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="./"><img src="./character-forge.png" alt="Icona Character Forge" className={styles.logo} /></Link>
+                    <Link className="navbar-brand" to="/"><img src="/character-forge.png" alt="Icona Character Forge" className={styles.logo} /></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -37,7 +37,7 @@ function Header() {
                             </li>
                             <li><NavLink className={({ isActive, isPending }) =>
                                 isPending ? `${styles.navLink} ${styles.pending}` : isActive ? `${styles.navLink} ${styles.active}` : `${styles.navLink}`
-                            } aria-current="page" to="/species">Species</NavLink>
+                            } aria-current="page" to="/races">Races</NavLink>
                             </li>
                             <li><NavLink className={({ isActive, isPending }) =>
                                 isPending ? `${styles.navLink} ${styles.pending}` : isActive ? `${styles.navLink} ${styles.active}` : `${styles.navLink}`
@@ -61,7 +61,7 @@ function Header() {
                         </ul>
                         {user?.token ? 
                         <div className="d-flex flex-column flex-lg-row gap-2">
-                            <Link className={`btn ${styles.actionBtn}`} to="/profile">{user.name}</Link>
+                            <Link className={`btn ${styles.actionBtn}`} to={`/profiles/${user.id}`}>{user.name}</Link>
                             <button className={`btn ${styles.actionBtn}`} onClick={logout}>Logout</button>
                         </div>
                         :

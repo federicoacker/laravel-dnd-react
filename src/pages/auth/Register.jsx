@@ -28,7 +28,7 @@ function Register() {
 
     return (
         <div className="container">
-            <form className="form-control" method="POST" onSubmit={handleSubmit} data-bs-theme="dark">
+            <form className={`form-control ${styles.card}`} method="POST" onSubmit={handleSubmit} data-bs-theme="dark">
                 <label className="form-label" htmlFor="name">Name</label>
                 <input onChange={handleChange} required className="form-control" type="text" name="name" id="name" placeholder="Username" value={submitData.name}></input>
                 {registrationErrors.name &&

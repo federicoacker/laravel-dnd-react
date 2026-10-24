@@ -28,7 +28,7 @@ function Login() {
 
     return (
         <div className="container">
-            <form className="form-control" method="POST" onSubmit={handleSubmit} data-bs-theme="dark">
+            <form className={`form-control ${styles.card}`} method="POST" onSubmit={handleSubmit} data-bs-theme="dark">
                 <label className="form-label" htmlFor="email">Email</label>
                 <input onChange={handleChange} required className="form-control" type="text" name="email" id="email" placeholder="email@gmail.com" value={submitData.email}></input>
                 <label className="form-label" htmlFor="password">Password</label>

@@ -1,0 +1,29 @@
+.card {
+  margin: 1rem auto;
+  padding: 1rem 1rem;
+  color: white;
+  background: url("/denim075.png");
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.8px);
+  -webkit-backdrop-filter: blur(5.8px);
+  border: 1px solid #FF611E;
+  transition: all 0.5s ease;
+  height:200px;
+}
+.card:hover {
+  scale: 1.025;
+  box-shadow: 0 4px 30px #ff621e80;
+}
+
+.cardInfo {
+  padding: 0 2rem;
+  align-content:center;
+  height:100px;
+}
+.cardTitle {
+  color:#FF611E;
+  font-size: large;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
